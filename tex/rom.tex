@@ -1,0 +1,16 @@
+\chapter{ROM}
+
+The DSP ROM is the public replacement taken from Dolphin.
+It is fairly simple, probably much simpler than that in the actual DSP.
+
+\section{Entry}
+According to dolphin, the reset vector is \hex{8000}. I believe this might be a hack though, since games tend to first DMA a short stub of code to the start or IRAM (at \hex{0000}), and then ask the DSP to reset. 
+
+The replacement DSP ROM starts with 
+
+\inputminted[fontsize=\small]{asm}{../rom/rom_start.asm}
+
+The first thing it does is send the CPU \hex{8071FEED} in the mail. Then it waits for the mail to be sent. It loads some registers with the values it receives. These values hold info on how to load the actual ucode from main memory. Once it has all the info it needs, it does a DMA and jumps to the entry point.
+
+Pseudocode for this is 
+\inputminted[fontsize=\small]{asm}{../rom/rom_start.c}

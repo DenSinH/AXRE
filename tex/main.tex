@@ -1,0 +1,41 @@
+\input{header}
+
+% comment out files here in order to not include them in the main output
+% this is mainly useful for when the doc becomes a bit longer, in order to reduce compile times
+\includeonly{
+    title,
+    % example,
+    rom,
+    ucode,
+}
+
+\begin{document}
+\pagenumbering{roman}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\frontmatter
+\include{title}  % basic title page
+\tableofcontents
+\mainmatter
+
+This was done using IDA, and the IDA plugin for the GameCube DSP, originally developed by delroth, but later updated by peach AKA wheremyfoodat AKA guccirodakino.
+
+First of all some general functions we might use:
+
+\inputminted{C}{../general/general.h}
+
+\include{rom}
+\include{ucode}
+\include{example}  % include without adding .tex
+
+% in case we ever have appendices
+% \begin{appendix}
+%     
+% \end{appendix}
+
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
+
+\end{document}
