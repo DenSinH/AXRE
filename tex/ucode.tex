@@ -1,6 +1,6 @@
 \chapter{UCode}
 
-The main interesting part of the DSP's workings is the actual UCode itself. The main entrypoint (for Mortal Kombat 5 at least), is at \hex{10}. The main thing it does is waiting for mail, and then processing a stream of commands (at \hex{0xc00} in DMEM).
+The main interesting part of the DSP's workings is the actual UCode itself. The main entrypoint (for Mortal Kombat 5 at least), is at \hex{10}. The main thing it does is waiting for mail, and then processing a stream of commands (at \hexc00} in DMEM).
 
 The start of the UCode looks like this:
 
@@ -22,7 +22,7 @@ The assembly looks like
 
 The point of this is to fill 3 regions of memory with either 0's, or incrementing values. Which of the 2 depends on the values from a \hex{40} byte stream DMAd from main memory. 
 
-Note that we are reading a \mintinline{c}{base} and an \mintinline{c}{incr} 9 times from the stream, which would amount to 9 * \hex{6} = \hex{0x36} bytes, so the DMA transfers 4 bytes too many.
+Note that we are reading a \mintinline{c}{base} and an \mintinline{c}{incr} 9 times from the stream, which would amount to 9 * \hex{6} = \hex{36} bytes, so the DMA transfers 4 bytes too many.
 
 I suspect that the incrementing values are a main memory address and strides. The address regions \hex{0000} - \hex{03c0}, \hex{0400} - \hex{07c0} and \hex{07c0} - \hex{0b80} will be used in most other commands.
 
@@ -36,7 +36,7 @@ Pseudocode for this could be
 \subsection{Command \hex{4}, \hex{5} and \hex{9}}
 These commands are all very similar. Command \hex{9} only calls \mintinline{c}{sub_484} with a pointer to the buffer at \hex{7c0}, while \hex{4} and \hex{5} DMA the buffers at \hex{400} and \hex{7c0} respectively, before also calling \mintinline{c}{sub_484} with their respective buffers as arguments. Since they are so similar, I will only put the assembly for command \hex{4} here.
 
-\inputminted{asm}{../ucode/command_4.asm}
+\inputminted[fontsize=\small]{asm}{../ucode/command_4.asm}
 
 And the pseudocode for \hex{4} and \hex{5} is the same, except \hex{5} uses \hex{7c0} instead of \hex{400}:
 
@@ -48,6 +48,14 @@ And the pseudocode for \hex{4} and \hex{5} is the same, except \hex{5} uses \hex
 \subsection{Command \hex{a} - \hex{c}}
 These commands immediately return on call.
 \subsection{Command \hex{d}}
+This command loads a new command stream to DMEM and resets the \mintinline{c}{command_stream} pointer. 
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_d.asm}
+
+Pseudocode for this could be 
+
+\inputminted{c}{../ucode/command_d.c}
+
 \subsection{Command \hex{e}}
 \subsection{Command \hex{f}}
 \subsection{Command \hex{10}}
