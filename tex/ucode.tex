@@ -80,7 +80,27 @@ And pseudocode is
 \inputminted{c}{../ucode/command_6.c}
 
 \subsection{Command \hex{7}}
+clears out \hex{140} word section at \hex{0000}, DMAs \hex{140} words of data from main memory to \hex{e44} and copies it over to \hex{0140} and \hex{280}, completely filling the buffer at \hex{0000}. 
+
+Assembly for this command is
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_7.asm}
+
+Pseudocode is
+
+\inputminted{c}{../ucode/command_7.c}
+
 \subsection{Command \hex{8}}
+This command is very confusing, since there is either a bug in the UCode or in dolphin and the doc by Duddie. The command saves a main memory address in \texttt{AX1}, then later uses \texttt{LD} extended opcodes to load values into \texttt{AX1} from the COEF region in memory for some calculation. At the end, it should restore the main memory address, and DMA data to main memory. If dolphin and the doc by Duddie are correct though, this DMA will happen to a pretty random address. I assume there is an error in the way that they describe that the \texttt{LD} etended opcode should happen.
+
+The assembly for this command is 
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_8.asm}
+
+Pseudocode is
+
+\inputminted{c}{../ucode/command_8.c}
+
 \subsection{Command \hex{a} - \hex{c}}
 These commands immediately return on call.
 \subsection{Command \hex{d}}

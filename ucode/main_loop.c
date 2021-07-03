@@ -1,10 +1,14 @@
 // at 0xaff
 extern void (*)(u16* &command_stream) command_jump_table[0x12];
 
+extern u16 data_E1B, data_E31;
+
 
 void main_entry() {
     // setup status and config registers
-    // todo: write to byte_E1B and byte_E31
+    data_E1B = 0xe80;
+    data_E31 = 0;
+
     send_mail(0xdcd1, 0x0000);
     send_irq();
     wait_for_mail_sent();
