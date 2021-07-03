@@ -31,8 +31,36 @@ Pseudocode for this could be
 \inputminted{cpp}{../ucode/command_0.c}
 
 \subsection{Command \hex{1}}
+Transforms the buffers setup by command \hex{0} with data gotten from main memory. The assembly is 
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_1.asm}
+
+Pseudocode for this could be 
+
+\inputminted{cpp}{../ucode/command_1.c}
+
 \subsection{Command \hex{2}}
+This DMAs a struct of settings from main memory to \hex{0b80}. It stores pointers to buffer sections to \hex{0e08}. It also DMAs data to the intermediate section at \hex{03c0}. 
+
+Depending on the data in the DMAd struct, it either sets some pointers to \hex{0ce0} (end of command stream?), or it overwrites the command stream with new data and sets the pointers to addresses relative to \hex{0cc0} (command stream start).
+
+Assembly for this is
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_2.asm}
+
+And pseudocode could be
+
+\inputminted{cpp}{../ucode/command_2.c}
+
 \subsection{Command \hex{3}}
+This command uses the struct transferred by command 2 to transfer and transform other data. The code is quite complex, but here is the assembly
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_3.asm}
+
+And pseudocode could be
+
+\inputminted{cpp}{../ucode/command_3.c}
+
 \subsection{Command \hex{4}, \hex{5} and \hex{9}}
 These commands are all very similar. Command \hex{9} only calls \mintinline{c}{sub_484} with a pointer to the buffer at \hex{7c0}, while \hex{4} and \hex{5} DMA the buffers at \hex{400} and \hex{7c0} respectively, before also calling \mintinline{c}{sub_484} with their respective buffers as arguments. Since they are so similar, I will only put the assembly for command \hex{4} here.
 
@@ -43,6 +71,14 @@ And the pseudocode for \hex{4} and \hex{5} is the same, except \hex{5} uses \hex
 \inputminted{c}{../ucode/command_459.c}
 
 \subsection{Command \hex{6}}
+Command 6 simply transfers the buffer at \hex{0} back to main memory. The assembly is 
+
+\inputminted[fontsize=\small]{asm}{../ucode/command_6.asm}
+
+And pseudocode is
+
+\inputminted{c}{../ucode/command_6.c}
+
 \subsection{Command \hex{7}}
 \subsection{Command \hex{8}}
 \subsection{Command \hex{a} - \hex{c}}
