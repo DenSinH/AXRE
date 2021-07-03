@@ -30,7 +30,7 @@ void command_8(u16* &command_stream) {
         
         *buffer_f00++ = prod >> 16;
         buffer_280++;
-        *ptr_E1B = *data_ptr++;
+        *ptr_E1B = *buffer_280++;
     }
 
     *ptr_E1B = buffer_f00;
