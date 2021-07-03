@@ -70,6 +70,16 @@ And the pseudocode for \hex{4} and \hex{5} is the same, except \hex{5} uses \hex
 
 \inputminted{c}{../ucode/command_459.c}
 
+This function \mintinline{c}{sub_484} DMAs a new buffer from main memory to the buffer passed as argument, and adds it to the current buffer at \hex{0}.
+
+The assembly for this function is
+
+\inputminted[fontsize=\small]{asm}{../ucode/mix_buffers.asm}
+
+And pseudocode is
+
+\inputminted{c}{../ucode/mix_buffers.c}
+
 \subsection{Command \hex{6}}
 Command 6 simply transfers the buffer at \hex{0} back to main memory. The assembly is 
 
