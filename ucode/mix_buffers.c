@@ -5,7 +5,7 @@ void mix_buffers(u16* &command_stream, u16* const buffer) {
     dma_to_dmem(dspaddr, mmaddr, 0xc0);
     wait_for_dma_finish();
 
-    u16* buffer_0_3, buffer_0_2 = 0;  // AR3/AR2
+    u16* buffer_0 = 0;  // AR3/AR2
     u16* _buffer; // AR0
 
     for (int i = 0; i < 9; i++) {

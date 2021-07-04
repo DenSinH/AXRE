@@ -27,7 +27,7 @@ u16 sub_81f9(u16* cc0_buffer_current, u16* &structb80_9, u16* buffer_section) {
         i16 stream_factor = *cc0_buffer_current++;
         buffer_data += constant_factor * stream_factor;
         buffer_data >>= 16;
-        *(u32*)buffer_section = buffer_data >> 16;  // mh part
+        *(u32*)buffer_section = buffer_data;  // lm part
         buffer_section += 2;
     }
     return buffer_data >> 16;  // mid part
