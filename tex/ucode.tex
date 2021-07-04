@@ -12,6 +12,31 @@ Pseudocode for this part could be
 
 \inputminted{C}{../ucode/main_loop.c}
 
+\section{Memory layout}
+
+There are different important areas in DMEM:
+\begin{table}[H]
+    \begin{tabular}{l | l | p{0.6\textwidth}}
+        Start & Length & Description \\ 
+        \hline\hline
+        \hex{0} & \hex{140} & Data buffer section filled with 32 bit values \\ \hline
+        \hex{140} & \hex{140} & Data buffer section filled with 32 bit values \\\hline
+        \hex{280} & \hex{140} & Data buffer section filled with 32 bit values \\\hline
+        \hex{3c0} & \hex{80} & Some sort of struct that is only used in command \hex{3} \\ \hline
+        \hex{400} & \hex{3c0} & Data buffer similar to those at \hex{0}, filled with 32 bit values \\ \hline
+        \hex{7c0} & \hex{3c0} & Data buffer similar to those at \hex{0}, filled with 32 bit values \\ \hline
+        \hex{b80} & \hex{80} & Some sort of struct with data used in different commands \\ \hline
+        \hex{c00} & \hex{c0}? & Command stream \\ \hline
+        \hex{cc0} & \hex{20} & Data stream referenced by different commands \\ \hline
+        \hex{e14} & \hex{1} & Some function pointer \\ \hline
+        \hex{e15} & \hex{1} & Some function pointer \\ \hline
+        \hex{e16} & \hex{1} & Some data \\ \hline
+        \hex{e40} & \hex{4} & Some pointers into the stream at \hex{cc0}. \hex{e40} and \hex{e41} seem to indicate the \quoted{current} position, and \hex{e42} and \hex{e43} seem to indicate the end (\hex{ce0}). \\ \hline
+        \hex{e44} & \hex{60} & Scratchpad region \\ \hline
+        \hex{ea4} & \hex{60} & Scratchpad region
+    \end{tabular}
+\end{table}
+
 \section{Commands}
 The commands all return with a \mintinline{asm}{JMP receive_command}, save for command \hex{f}, which does some sort of reset.
 

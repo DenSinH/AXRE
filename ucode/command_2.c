@@ -4,6 +4,18 @@ extern u16 data_e14, data_e15, data_e16;
 extern u16* data_e40, data_e41, data_e42, data_e43;
 extern struct* structb80;
 
+void (*extra_function_table[32])() = {
+
+}
+
+void (*pre_function_table[3])() = {
+
+}
+
+u16 setting_data[3] = {
+    0x1000, 0x1200, 0x1400
+}
+
 void command_2(u16* &command_stream) {
     u32 mmaddr = ((*command_stream++) << 16) | (*command_stream++);
 
@@ -18,9 +30,9 @@ void command_2(u16* &command_stream) {
     mmaddr = (structb80[0x27] << 16) | structb80[0x28];
     dma_to_dmem(0x3c0, mmaddr, 0x80);
 
-    data_e15 = (structb80[0x4]) + 0xb31;
-    data_e16 = (structb80[0x5]) + 0xb34;
-    data_e14 = (structb80[0x6]) + 0xb11;
+    data_e15 = pre_function_table[structb80[0x4]];
+    data_e16 = setting_data[structb80[0x5]];
+    data_e14 = post_function_table[structb80[0x6]];
 
     if (structb80[0x1b]) {
         data_e40 = 0xcc0 + structb80[0x1e];

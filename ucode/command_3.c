@@ -57,7 +57,7 @@ void command_3(u16* &command_stream) {
                     else {
                         structb80[0x1e]--;
                     }
-                    data_e40 = data_e43 + 0xe0 + structb80[0x1e];
+                    data_e40 = data_e43 - 0x20 + structb80[0x1e];
 
                     if (structb80[0x1f] <= structb80[0x21]) {
                         structb80[0x1f]++
@@ -65,7 +65,7 @@ void command_3(u16* &command_stream) {
                     else {
                         structb80[0x1f]--;
                     }
-                    data_e41 = data_e43 + 0xe0 + structb80[0x1f];
+                    data_e41 = data_e43 - 0x20 + structb80[0x1f];
                 }
                 else {
                     data_e40 = data_e41 = data_e43 = data_e42;

@@ -233,7 +233,7 @@ IRAM:0309
 IRAM:0309 loc_309:
 IRAM:0309                                         ; command_3:loc_306↑j
 IRAM:0309                 SR             loc_B9E : $AC0.M,
-IRAM:030B ; [e40] = [e43] + 0xe0 + [b9e]  // the incr/decr [b9e]
+IRAM:030B ; [e40] = [e43] - 0x20 + [b9e]  // the incr/decr [b9e]
 IRAM:030B                 LR             $AC1.M, cmd2_DMEM_E43
 IRAM:030D                 ADDIS          $AC1.M, 0xE0
 IRAM:030E                 ADD            $ACC0, $ACC1
@@ -259,7 +259,7 @@ IRAM:0320
 IRAM:0320 loc_320:
 IRAM:0320                                         ; command_3:loc_31D↑j
 IRAM:0320                 SR             loc_B9F : $AC0.M,
-IRAM:0322 ; [e41] = [e43] + 0xe0 + [b9f]
+IRAM:0322 ; [e41] = [e43] - 0x20 + [b9f]
 IRAM:0322                 LR             $AC1.M, cmd2_DMEM_E43
 IRAM:0324                 ADDIS          $AC1.M, 0xE0
 IRAM:0325                 ADD            $ACC0, $ACC1

@@ -7,6 +7,7 @@
 #define DMAMMAddrHi ((volatile u16*)0xffce)
 #define DMAMMAddrLo ((volatile u16*)0xffcf)
 
+#define IO ((volatile u16*)0xff00)
 #define ToCPUMailHi ((volatile u16*)0xfffc)
 #define ToCPUMailLo ((volatile u16*)0xfffd)
 #define FromCPUMailHi ((volatile u16*)0xfffe)
