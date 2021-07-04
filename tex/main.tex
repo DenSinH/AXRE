@@ -7,6 +7,7 @@
     % example,
     rom,
     ucode,
+    ucode_asm,
 }
 
 \begin{document}
@@ -28,12 +29,11 @@ First of all some general functions we might use:
 
 \include{rom}
 \include{ucode}
-\include{example}  % include without adding .tex
+\include{example}
 
-% in case we ever have appendices
-% \begin{appendix}
-%     
-% \end{appendix}
+\begin{appendix}
+    \include{ucode_asm}
+\end{appendix}
 
 \bibliographystyle{unsrt}
 \bibliography{bibliography}

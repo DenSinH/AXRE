@@ -1,4 +1,4 @@
-IRAM:043B command_e:                              ; DATA XREF: IRAM:command_jump_table↓o
+IRAM:043B command_e:
 IRAM:043B                 CLR15
 IRAM:043C                 M2
 IRAM:043D                 CLR            $ACC0
@@ -35,7 +35,7 @@ IRAM:045B                 LSL16'L        $ACC0 : $AC1.M, @$AR3
 IRAM:045C                 LRRI           $AC1.L, @$AR3
 IRAM:045D                 LSL16'S        $ACC1 : @$AR1, $AC0.M
 IRAM:045E
-IRAM:045E loc_45E:                                ; CODE XREF: command_e+1C↑j
+IRAM:045E loc_45E:
 IRAM:045E                 CLR'S          $ACC0 : @$AR1, $AC1.M
 IRAM:045F ;     BLOOPI END
 IRAM:045F                 CLR            $ACC1
@@ -52,11 +52,11 @@ IRAM:0469                 ADDAXL         $ACC0, $AX1.L ; 0x80
 IRAM:046A                 MRR            $AX0.H, $AC0.M ; mmaddr += 0x80
 IRAM:046B                 MRR            $AX0.L, $AC0.L
 IRAM:046C
-IRAM:046C loc_46C:                                ; CODE XREF: command_e+19↑j
+IRAM:046C loc_46C:
 IRAM:046C                 CLR            $ACC0
 IRAM:046D ; BLOOPI END
 IRAM:046D
-IRAM:046D cmde_wait_for_dma_finish:               ; CODE XREF: command_e+35↓j
+IRAM:046D cmde_wait_for_dma_finish:
 IRAM:046D                 LRS            $AC0.M, DMAControl
 IRAM:046E                 ANDF           $AC0.M, 4
 IRAM:0470                 JLNZ           cmde_wait_for_dma_finish

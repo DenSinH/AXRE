@@ -1,4 +1,4 @@
-IRAM:0413 command_4:                              ; DATA XREF: IRAM:command_jump_table↓o
+IRAM:0413 command_4:
 IRAM:0413                 SET16
 IRAM:0414 ; DMA 0x780 bytes to main mem from DSP DMEM 0x400
 IRAM:0414 ; MMADDR read from command stream

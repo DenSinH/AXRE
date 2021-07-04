@@ -1,4 +1,4 @@
-IRAM:0165 command_6:                              ; DATA XREF: IRAM:command_jump_table↓o
+IRAM:0165 command_6:
 IRAM:0165                 CLR            $ACC0
 IRAM:0166                 SET16
 IRAM:0167 DMA 0x780 bytes from DSP DMEM[0] to main mem address from command stream

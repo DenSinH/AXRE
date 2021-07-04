@@ -1,4 +1,4 @@
-command_1:                              ; DATA XREF: IRAM:command_jump_table↓o
+command_1:
 IRAM:013E                 LRI            $IX1, 0xFFFF
 IRAM:0140 ; read main memory address from command stream into AX0 (hi then lo)
 IRAM:0140                 CLR'L          $ACC0 : $AX0.H, @$AR0
@@ -28,7 +28,7 @@ IRAM:015D ; End of function command_1
 
 ...
 
-transform_buffer:                       ; CODE XREF: command_1+B↑p
+transform_buffer:
 IRAM:04F1                                         ; command_1+14↑p ...
 IRAM:04F1                 SET16
 IRAM:04F2 ; input ar1: pointer to data transferred by command_0
@@ -79,7 +79,7 @@ IRAM:0529                 NOP
 IRAM:052A                 NOP
 IRAM:052B                 SET16
 IRAM:052C
-IRAM:052C loc_52C:                                ; CODE XREF: transform_buffer+F↑j
+IRAM:052C loc_52C:
 IRAM:052C                 CLR            $ACC1
 IRAM:052D ; BLOOPI_END
 IRAM:052D
@@ -119,7 +119,7 @@ IRAM:054C
 IRAM:054C ; =============== S U B R O U T I N E =======================================
 IRAM:054C
 IRAM:054C
-IRAM:054C transform_buffer_section:               ; CODE XREF: transform_buffer+22↑p
+IRAM:054C transform_buffer_section:
 IRAM:054C                                         ; transform_buffer+36↑p ...
 IRAM:054C                 SET40
 IRAM:054D                 SET15
@@ -152,7 +152,7 @@ IRAM:0559 ; *(u32*)ar1++ = ac1.ml
 IRAM:0559 ; this overwrites the previous value
 IRAM:0559                 MULX'S         $AX0.L, $AX1.L : @$AR1, $AC1.M
 IRAM:055A
-IRAM:055A loc_55A:                                ; CODE XREF: transform_buffer_section+7↑j
+IRAM:055A loc_55A:
 IRAM:055A                 MULXMV'S       $AX0.H, $AX1.L, $ACC0 : @$AR1, $AC1.L
 IRAM:055B ; BLOOPI_END
 IRAM:055B                 RET

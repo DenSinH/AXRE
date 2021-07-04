@@ -1,4 +1,4 @@
-command_8:                              ; DATA XREF: IRAM:command_jump_table↑o
+command_8:
 IRAM:0B37                 SET16
 IRAM:0B38                 CLR            $ACC0
 IRAM:0B39 ; read mmaddr from command stream
@@ -16,7 +16,7 @@ IRAM:0B44                 MRR            $AX1.L, $AC0.L
 IRAM:0B45                 CLR            $ACC0
 IRAM:0B46 ; wait for DMA to finish
 IRAM:0B46
-IRAM:0B46 loc_B46:                                ; CODE XREF: IRAM:0B49↓j
+IRAM:0B46 loc_B46:
 IRAM:0B46                 LRS            $AC0.M, DMAControl
 IRAM:0B47                 ANDF           $AC0.M, 4
 IRAM:0B49                 JLNZ           loc_B46
@@ -47,7 +47,7 @@ IRAM:0B62                 MRR            $IX3, $AR3
 IRAM:0B63                 CLR            $ACC0
 IRAM:0B64 ; wait for DMA to finish
 IRAM:0B64
-IRAM:0B64 loc_B64:                                ; CODE XREF: IRAM:0B67↓j
+IRAM:0B64 loc_B64:
 IRAM:0B64                 LRS            $AC0.M, DMAControl
 IRAM:0B65                 ANDF           $AC0.M, 4
 IRAM:0B67                 JLNZ           loc_B64
@@ -138,11 +138,11 @@ IRAM:0BA4 ; DMA DMEM 0xe80 back to main memory
 IRAM:0BA4                 SRS            DMAMMADDRH, $AC0.M
 IRAM:0BA5                 SRS            DMAMMADDRL, $AC0.L
 IRAM:0BA6
-IRAM:0BA6 loc_BA6:                                ; DATA XREF: command_2+2A↑r
+IRAM:0BA6 loc_BA6:
 IRAM:0BA6                                         ; command_3+165↑r
 IRAM:0BA6                 SI             DMADSPADDR, 0xE80
 IRAM:0BA8
-IRAM:0BA8 DMEM_BA8:                               ; DATA XREF: command_2+2C↑r
+IRAM:0BA8 DMEM_BA8:
 IRAM:0BA8                                         ; command_3+167↑r
 IRAM:0BA8                 SI             DMAControl, 1
 IRAM:0BAA                 SI             DMALength, 0x100

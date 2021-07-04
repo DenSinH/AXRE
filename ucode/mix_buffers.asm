@@ -1,4 +1,4 @@
-IRAM:0484 mix_buffers:                            ; CODE XREF: command_9+2↑p
+IRAM:0484 mix_buffers:
 IRAM:0484                                         ; command_4+10↑p ...
 IRAM:0484                 SET16
 IRAM:0485 ; IX2 holds some address:
@@ -45,7 +45,7 @@ IRAM:04A1                 MRR            $AR0, $IX2
 IRAM:04A2                 LRI            $AR3, 0
 IRAM:04A4                 MRR            $AR2, $AR3
 IRAM:04A5
-IRAM:04A5 cmdf_wait_for_dma_finish:               ; CODE XREF: mix_buffers+24↓j
+IRAM:04A5 cmdf_wait_for_dma_finish:
 IRAM:04A5                 LRS            $AC1.M, DMAControl
 IRAM:04A6                 ANDF           $AC1.M, 4
 IRAM:04A8                 JLNZ           cmdf_wait_for_dma_finish
@@ -101,7 +101,7 @@ IRAM:04D1                 NX'LD          $AX0.H : $AX1.H, @$AR0
 IRAM:04D2                 NX'LD          $AX0.L : $AX1.L, @$AR0
 IRAM:04D3                 MOVAX'S        $ACC0, $AX1 : @$AR2, $AC1.M
 IRAM:04D4
-IRAM:04D4 loc_4D4:                                ; CODE XREF: mix_buffers+47↑j
+IRAM:04D4 loc_4D4:
 IRAM:04D4                 ADDAX'S        $ACC0, $AX0 : @$AR2, $AC1.L
 IRAM:04D5 ;     BLOOPI END
 IRAM:04D5                 NX'LD          $AX0.H : $AX1.H, @$AR0
@@ -110,7 +110,7 @@ IRAM:04D7                 MOVAX'S        $ACC1, $AX1 : @$AR2, $AC0.M
 IRAM:04D8                 ADDAX'S        $ACC1, $AX0 : @$AR2, $AC0.L
 IRAM:04D9                 SRRI           @$AR2, $AC1.M
 IRAM:04DA
-IRAM:04DA loc_4DA:                                ; CODE XREF: mix_buffers+26↑j
+IRAM:04DA loc_4DA:
 IRAM:04DA                 SRRI           @$AR2, $AC1.L
 IRAM:04DB ; BLOOPI END
 IRAM:04DB                 NX'LD          $AX0.H : $AX1.H, @$AR0
@@ -126,7 +126,7 @@ IRAM:04E5                 NX'LD          $AX0.H : $AX1.H, @$AR0
 IRAM:04E6                 NX'LD          $AX0.L : $AX1.L, @$AR0
 IRAM:04E7                 MOVAX'S        $ACC0, $AX1 : @$AR2, $AC1.M
 IRAM:04E8
-IRAM:04E8 loc_4E8:                                ; CODE XREF: mix_buffers+5B↑j
+IRAM:04E8 loc_4E8:
 IRAM:04E8                 ADDAX'S        $ACC0, $AX0 : @$AR2, $AC1.L
 IRAM:04E9                 NX'LD          $AX0.H : $AX1.H, @$AR0
 IRAM:04EA                 NX'LD          $AX0.L : $AX1.L, @$AR0

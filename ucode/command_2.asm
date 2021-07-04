@@ -1,7 +1,7 @@
 ; =============== S U B R O U T I N E =======================================
 IRAM:01BC
 IRAM:01BC
-IRAM:01BC command_2:                              ; DATA XREF: IRAM:command_jump_table↓o
+IRAM:01BC command_2:
 IRAM:01BC                 CLR            $ACC0
 IRAM:01BD ; read mmaddr from command stream
 IRAM:01BD                 CLR'L          $ACC1 : $AC0.M, @$AR0
@@ -97,7 +97,7 @@ IRAM:0238                 JMP            receive_command
 IRAM:023A ; ---------------------------------------------------------------------------
 IRAM:023A ; store end of command stream (?) to E40/41/42/43
 IRAM:023A
-IRAM:023A b9b_zero:                               ; CODE XREF: command_2+57↑j
+IRAM:023A b9b_zero:
 IRAM:023A                 LRI            $AC1.M, 0xCE0
 IRAM:023C                 SR             cmd2_DMEM_E42, $AC1.M
 IRAM:023E                 SR             cmd2_DMEM_E40_start, $AC1.M

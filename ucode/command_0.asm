@@ -1,4 +1,4 @@
-command_0:                              ; DATA XREF: IRAM:command_jump_table↓o
+command_0:
 IRAM:0082                 CLR            $ACC0
 IRAM:0083 ; load next two words from stream into ac0 and ac1
 IRAM:0083                 CLR'L          $ACC1 : $AC0.M, @$AR0
@@ -40,7 +40,7 @@ IRAM:00A3                 SRRI           @$AR2, $AC0.M
 IRAM:00A4                 JMP            cmd0_dmem_140_words_filled
 IRAM:00A6 ; ---------------------------------------------------------------------------
 IRAM:00A6
-IRAM:00A6 cmd0_BASE_not_0:                   ; CODE XREF: command_0+1E↑j
+IRAM:00A6 cmd0_BASE_not_0:
 IRAM:00A6                 ASR16          $ACC1    ; AC1.M ASR16 -> AC1.L
 IRAM:00A7 ; BASE to buffer at 0x0000
 IRAM:00A7                 SRRI           @$AR2, $AC0.M
@@ -54,12 +54,12 @@ IRAM:00AC ; store BASE (with INCR added every loop)
 IRAM:00AC ; 32 bit value
 IRAM:00AC                 SRRI           @$AR2, $AC0.M
 IRAM:00AD
-IRAM:00AD loc_AD:                                 ; CODE XREF: command_0+27↑j
+IRAM:00AD loc_AD:
 IRAM:00AD                 SRRI           @$AR2, $AC0.L
 IRAM:00AE ; dest is now 0x140
 IRAM:00AE ; load 2 more words from the DMA'ed stream (new BASE)
 IRAM:00AE
-IRAM:00AE cmd0_dmem_140_words_filled:             ; CODE XREF: command_0+22↑j
+IRAM:00AE cmd0_dmem_140_words_filled:
 IRAM:00AE                 LRRI           $AC0.M, @$AR1
 IRAM:00AF                 LRRI           $AC0.L, @$AR1
 IRAM:00B0                 TST            $ACC0
@@ -73,7 +73,7 @@ IRAM:00B5                 SRRI           @$AR2, $AC0.M
 IRAM:00B6                 JMP            cmd0_another_140_words_filled
 IRAM:00B8 ; ---------------------------------------------------------------------------
 IRAM:00B8
-IRAM:00B8 loc_B8:                                 ; CODE XREF: command_0+30↑j
+IRAM:00B8 loc_B8:
 IRAM:00B8                 ASR16          $ACC1    ; INCR ac1.m asr16 -> ac2.l
 IRAM:00B9 ; store BASE to dest
 IRAM:00B9                 SRRI           @$AR2, $AC0.M
@@ -86,12 +86,12 @@ IRAM:00BB                 BLOOP          $AX1.H, loc_BF
 IRAM:00BD                 ADD            $ACC0, $ACC1
 IRAM:00BE                 SRRI           @$AR2, $AC0.M
 IRAM:00BF
-IRAM:00BF loc_BF:                                 ; CODE XREF: command_0+39↑j
+IRAM:00BF loc_BF:
 IRAM:00BF                 SRRI           @$AR2, $AC0.L
 IRAM:00C0 ; dest is now 0x280
 IRAM:00C0 ; same thing again
 IRAM:00C0
-IRAM:00C0 cmd0_another_140_words_filled:          ; CODE XREF: command_0+34↑j
+IRAM:00C0 cmd0_another_140_words_filled:
 IRAM:00C0                 LRRI           $AC0.M, @$AR1
 IRAM:00C1                 LRRI           $AC0.L, @$AR1
 IRAM:00C2                 TST            $ACC0
@@ -102,7 +102,7 @@ IRAM:00C7                 SRRI           @$AR2, $AC0.M
 IRAM:00C8                 JMP            cmd0_another_140_words_filled_1
 IRAM:00CA ; ---------------------------------------------------------------------------
 IRAM:00CA
-IRAM:00CA loc_CA:                                 ; CODE XREF: command_0+42↑j
+IRAM:00CA loc_CA:
 IRAM:00CA                 ASR16          $ACC1
 IRAM:00CB                 SRRI           @$AR2, $AC0.M
 IRAM:00CC                 SRRI           @$AR2, $AC0.L
@@ -110,12 +110,12 @@ IRAM:00CD                 BLOOP          $AX1.H, loc_D1
 IRAM:00CF                 ADD            $ACC0, $ACC1
 IRAM:00D0                 SRRI           @$AR2, $AC0.M
 IRAM:00D1
-IRAM:00D1 loc_D1:                                 ; CODE XREF: command_0+4B↑j
+IRAM:00D1 loc_D1:
 IRAM:00D1                 SRRI           @$AR2, $AC0.L
 IRAM:00D2 ; At this point, 3 * 0x140 = 0x3c0 words are filled at the start of DMEM
 IRAM:00D2 ; ar2: dest = 0x400 // skip 0x40 bytes
 IRAM:00D2
-IRAM:00D2 cmd0_another_140_words_filled_1:        ; CODE XREF: command_0+46↑j
+IRAM:00D2 cmd0_another_140_words_filled_1:
 IRAM:00D2                 LRI            $AR2, 0x400
 IRAM:00D4 ; again, load BASE and INCR
 IRAM:00D4                 LRRI           $AC0.M, @$AR1
@@ -127,7 +127,7 @@ IRAM:00DA                 SRRI           @$AR2, $AC0.M
 IRAM:00DB                 JMP            cmd0_140_filled_at_400
 IRAM:00DD ; ---------------------------------------------------------------------------
 IRAM:00DD
-IRAM:00DD loc_DD:                                 ; CODE XREF: command_0+55↑j
+IRAM:00DD loc_DD:
 IRAM:00DD                 ASR16          $ACC1
 IRAM:00DE                 SRRI           @$AR2, $AC0.M
 IRAM:00DF                 SRRI           @$AR2, $AC0.L
@@ -135,11 +135,11 @@ IRAM:00E0                 BLOOP          $AX1.H, loc_E4
 IRAM:00E2                 ADD            $ACC0, $ACC1
 IRAM:00E3                 SRRI           @$AR2, $AC0.M
 IRAM:00E4
-IRAM:00E4 loc_E4:                                 ; CODE XREF: command_0+5E↑j
+IRAM:00E4 loc_E4:
 IRAM:00E4                 SRRI           @$AR2, $AC0.L
 IRAM:00E5 ; again load BASE and INCR and fill 140 words
 IRAM:00E5
-IRAM:00E5 cmd0_140_filled_at_400:                 ; CODE XREF: command_0+59↑j
+IRAM:00E5 cmd0_140_filled_at_400:
 IRAM:00E5                 LRRI           $AC0.M, @$AR1
 IRAM:00E6                 LRRI           $AC0.L, @$AR1
 IRAM:00E7                 TST'L          $ACC0 : $AC1.M, @$AR1
@@ -149,7 +149,7 @@ IRAM:00EB                 SRRI           @$AR2, $AC0.M
 IRAM:00EC                 JMP            cmd0_140_filled_at_540
 IRAM:00EE ; ---------------------------------------------------------------------------
 IRAM:00EE
-IRAM:00EE loc_EE:                                 ; CODE XREF: command_0+66↑j
+IRAM:00EE loc_EE:
 IRAM:00EE                 ASR16          $ACC1
 IRAM:00EF                 SRRI           @$AR2, $AC0.M
 IRAM:00F0                 SRRI           @$AR2, $AC0.L
@@ -157,11 +157,11 @@ IRAM:00F1                 BLOOP          $AX1.H, loc_F5
 IRAM:00F3                 ADD            $ACC0, $ACC1
 IRAM:00F4                 SRRI           @$AR2, $AC0.M
 IRAM:00F5
-IRAM:00F5 loc_F5:                                 ; CODE XREF: command_0+6F↑j
+IRAM:00F5 loc_F5:
 IRAM:00F5                 SRRI           @$AR2, $AC0.L
 IRAM:00F6 ; same thing again
 IRAM:00F6
-IRAM:00F6 cmd0_140_filled_at_540:                 ; CODE XREF: command_0+6A↑j
+IRAM:00F6 cmd0_140_filled_at_540:
 IRAM:00F6                 LRRI           $AC0.M, @$AR1
 IRAM:00F7                 LRRI           $AC0.L, @$AR1
 IRAM:00F8                 TST'L          $ACC0 : $AC1.M, @$AR1
@@ -171,7 +171,7 @@ IRAM:00FC                 SRRI           @$AR2, $AC0.M
 IRAM:00FD                 JMP            cmd0_140_filled_at_680
 IRAM:00FF ; ---------------------------------------------------------------------------
 IRAM:00FF
-IRAM:00FF loc_FF:                                 ; CODE XREF: command_0+77↑j
+IRAM:00FF loc_FF:
 IRAM:00FF                 ASR16          $ACC1
 IRAM:0100                 SRRI           @$AR2, $AC0.M
 IRAM:0101                 SRRI           @$AR2, $AC0.L
@@ -179,12 +179,12 @@ IRAM:0102                 BLOOP          $AX1.H, loc_106
 IRAM:0104                 ADD            $ACC0, $ACC1
 IRAM:0105                 SRRI           @$AR2, $AC0.M
 IRAM:0106
-IRAM:0106 loc_106:                                ; CODE XREF: command_0+80↑j
+IRAM:0106 loc_106:
 IRAM:0106                 SRRI           @$AR2, $AC0.L
 IRAM:0107 ; at this point, dest is already 0x7c0, not sure why the DSP loads it directly
 IRAM:0107 ; going to do the same thing yet again
 IRAM:0107
-IRAM:0107 cmd0_140_filled_at_680:                 ; CODE XREF: command_0+7B↑j
+IRAM:0107 cmd0_140_filled_at_680:
 IRAM:0107                 LRI            $AR2, 0x7C0
 IRAM:0109                 LRRI           $AC0.M, @$AR1
 IRAM:010A                 LRRI           $AC0.L, @$AR1
@@ -195,7 +195,7 @@ IRAM:010F                 SRRI           @$AR2, $AC0.M
 IRAM:0110                 JMP            cmd0_140_filled_at_7c0
 IRAM:0112 ; ---------------------------------------------------------------------------
 IRAM:0112
-IRAM:0112 loc_112:                                ; CODE XREF: command_0+8A↑j
+IRAM:0112 loc_112:
 IRAM:0112                 ASR16          $ACC1
 IRAM:0113                 SRRI           @$AR2, $AC0.M
 IRAM:0114                 SRRI           @$AR2, $AC0.L
@@ -203,12 +203,12 @@ IRAM:0115                 BLOOP          $AX1.H, loc_119
 IRAM:0117                 ADD            $ACC0, $ACC1
 IRAM:0118                 SRRI           @$AR2, $AC0.M
 IRAM:0119
-IRAM:0119 loc_119:                                ; CODE XREF: command_0+93↑j
+IRAM:0119 loc_119:
 IRAM:0119                 SRRI           @$AR2, $AC0.L
 IRAM:011A ; going to do the same thing again
 IRAM:011A ; dest is now 0x900
 IRAM:011A
-IRAM:011A cmd0_140_filled_at_7c0:                 ; CODE XREF: command_0+8E↑j
+IRAM:011A cmd0_140_filled_at_7c0:
 IRAM:011A                 LRRI           $AC0.M, @$AR1
 IRAM:011B                 LRRI           $AC0.L, @$AR1
 IRAM:011C                 TST'L          $ACC0 : $AC1.M, @$AR1
@@ -218,7 +218,7 @@ IRAM:0120                 SRRI           @$AR2, $AC0.M
 IRAM:0121                 JMP            cmd0_140_filled_at_900
 IRAM:0123 ; ---------------------------------------------------------------------------
 IRAM:0123
-IRAM:0123 loc_123:                                ; CODE XREF: command_0+9B↑j
+IRAM:0123 loc_123:
 IRAM:0123                 ASR16          $ACC1
 IRAM:0124                 SRRI           @$AR2, $AC0.M
 IRAM:0125                 SRRI           @$AR2, $AC0.L
@@ -226,12 +226,12 @@ IRAM:0126                 BLOOP          $AX1.H, loc_12A
 IRAM:0128                 ADD            $ACC0, $ACC1
 IRAM:0129                 SRRI           @$AR2, $AC0.M
 IRAM:012A
-IRAM:012A loc_12A:                                ; CODE XREF: command_0+A4↑j
+IRAM:012A loc_12A:
 IRAM:012A                 SRRI           @$AR2, $AC0.L
 IRAM:012B ; dest is now 0xa40
 IRAM:012B ; same thing again
 IRAM:012B
-IRAM:012B cmd0_140_filled_at_900:                 ; CODE XREF: command_0+9F↑j
+IRAM:012B cmd0_140_filled_at_900:
 IRAM:012B                 LRRI           $AC0.M, @$AR1
 IRAM:012C                 LRRI           $AC0.L, @$AR1
 IRAM:012D                 TST'L          $ACC0 : $AC1.M, @$AR1
@@ -241,7 +241,7 @@ IRAM:0131                 SRRI           @$AR2, $AC0.M
 IRAM:0132                 JMP            cmd0_done
 IRAM:0134 ; ---------------------------------------------------------------------------
 IRAM:0134
-IRAM:0134 loc_134:                                ; CODE XREF: command_0+AC↑j
+IRAM:0134 loc_134:
 IRAM:0134                 ASR16          $ACC1
 IRAM:0135                 SRRI           @$AR2, $AC0.M
 IRAM:0136                 SRRI           @$AR2, $AC0.L
@@ -249,10 +249,10 @@ IRAM:0137                 BLOOP          $AX1.H, loc_13B
 IRAM:0139                 ADD            $ACC0, $ACC1
 IRAM:013A                 SRRI           @$AR2, $AC0.M
 IRAM:013B
-IRAM:013B loc_13B:                                ; CODE XREF: command_0+B5↑j
+IRAM:013B loc_13B:
 IRAM:013B                 SRRI           @$AR2, $AC0.L
 IRAM:013C ; dest should end up at 0xb80
 IRAM:013C
-IRAM:013C cmd0_done:                              ; CODE XREF: command_0+B0↑j
+IRAM:013C cmd0_done:
 IRAM:013C                 JMP            receive_command
 IRAM:013C ; End of function command_0

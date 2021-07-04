@@ -15,7 +15,7 @@ void command_8(u16* &command_stream) {
     u16* buffer_f00 = 0xf00;
 
     buffer_280++;
-    *ptr_E1B = *buffer_280;
+    *ptr_E1B = *buffer_280++;
 
     // first and last iterations are unrolled in assembly
     for (int i = 0; i < 0xa0; i++) {

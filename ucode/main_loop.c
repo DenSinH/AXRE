@@ -12,8 +12,17 @@ void main_entry() {
     send_mail(0xdcd1, 0x0000);
     send_irq();
     wait_for_mail_sent();
+    goto wait_for_babe;
 
-    do { } while ((*FromCPUMailHi) != 0xbabe);
+send_dcd10001_mail:
+    // this part is only used in command f
+    send_mail(0xdcd1, 0x0001);
+    wait_for_mail_sent();
+wait_for_babe:
+
+    do {
+        wait_for_mail_recv();
+    } while ((*FromCPUMailHi) != 0xbabe);
     u16 dma_len = (*FromCPUMailLo);
     u32 dma_mmaddr = wait_for_mail_recv() & 0x7fff'ffff;
     dma_to_dmem(0xc00, dma_mmaddr, dma_len);

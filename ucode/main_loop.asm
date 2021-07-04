@@ -19,14 +19,14 @@ IRAM:0023                 SI             ToCPUMailHi, 0xDCD1
 IRAM:0025                 SI             ToCPUMailLo, 0
 IRAM:0027                 SI             DIRQ, 1
 IRAM:0029
-IRAM:0029 wait_for_mail:                          ; CODE XREF: main_entry+1C↓j
+IRAM:0029 wait_for_mail:
 IRAM:0029                 LRS            $AC0.M, ToCPUMailHi
 IRAM:002A                 ANDF           $AC0.M, 0x8000
 IRAM:002C                 JLNZ           wait_for_mail
-IRAM:002E                 JMP            mail_sent
+IRAM:002E                 JMP            wait_for_babe
 IRAM:0030 ; ---------------------------------------------------------------------------
 IRAM:0030
-IRAM:0030 send_dcd10001_irq:                      ; CODE XREF: j_send_dcd10001_irq↓j
+IRAM:0030 send_dcd10001_irq:
 IRAM:0030                 SBSET          2
 IRAM:0031                 SBSET          3
 IRAM:0032                 SBCLR          4
@@ -40,25 +40,25 @@ IRAM:003A                 SI             ToCPUMailHi, 0xDCD1
 IRAM:003C                 SI             ToCPUMailLo, 1
 IRAM:003E                 SI             DIRQ, 1
 IRAM:0040
-IRAM:0040 wait_for_mail_sent:                     ; CODE XREF: main_entry+33↓j
+IRAM:0040 wait_for_mail_sent:
 IRAM:0040                 LRS            $AC0.M, ToCPUMailHi
 IRAM:0041                 ANDF           $AC0.M, 0x8000
 IRAM:0043                 JLNZ           wait_for_mail_sent
 IRAM:0045
-IRAM:0045 mail_sent:                            ; CODE XREF: main_entry+1E↑j
+IRAM:0045 wait_for_babe:
 IRAM:0045                                         ; IRAM:0482↓j ...
 IRAM:0045                 SET16
 IRAM:0046                 CLR            $ACC0
 IRAM:0047                 CLR            $ACC1
 IRAM:0048                 LRI            $AC1.M, 0xBABE
 IRAM:004A
-IRAM:004A wait_for_babe:                          ; CODE XREF: main_entry+3D↓j
+IRAM:004A wait_for_babe_loop:
 IRAM:004A                                         ; main_entry+40↓j
 IRAM:004A                 LRS            $AC0.M, FromCPUMailHi
 IRAM:004B                 ANDCF          $AC0.M, 0x8000
-IRAM:004D                 JLNZ           wait_for_babe
+IRAM:004D                 JLNZ           wait_for_babe_loop
 IRAM:004F                 CMP
-IRAM:0050                 JNZ            wait_for_babe
+IRAM:0050                 JNZ            wait_for_babe_loop
 IRAM:0052 ; AX1.H contains the low part of the babe mail
 IRAM:0052 ; this holds the DMA length
 IRAM:0052                 LRS            $AX1.H, FromCPUMailLo
@@ -67,7 +67,7 @@ IRAM:0054 ; wait for DMA mm address to be sent over mail
 IRAM:0054 ; mail lo -> ac1 -> addr lo
 IRAM:0054 ; mail hi -> ac0 -> addr hi
 IRAM:0054
-IRAM:0054 wait_for_dma_mm_addr:                   ; CODE XREF: main_entry+47↓j
+IRAM:0054 wait_for_dma_mm_addr:
 IRAM:0054                 LRS            $AC0.M, FromCPUMailHi
 IRAM:0055                 ANDCF          $AC0.M, 0x8000
 IRAM:0057                 JLNZ           wait_for_dma_mm_addr
@@ -90,7 +90,7 @@ IRAM:0068
 IRAM:0068 ; at the start of the commands:
 IRAM:0068 ; ar0: word* cmd_stream_ptr
 IRAM:0068
-IRAM:0068 receive_command:                        ; CODE XREF: command_0:cmd0_done↓j
+IRAM:0068 receive_command:
 IRAM:0068                                         ; command_1+1F↓j ...
 IRAM:0068                 SET16
 IRAM:0069                 CLR            $ACC0
@@ -113,13 +113,13 @@ IRAM:0076                 ILRR           $AC0.M, @$AR3
 IRAM:0077                 MRR            $AR3, $AC0.M
 IRAM:0078                 JMPR           $AR3
 IRAM:0079 ; ---------------------------------------------------------------------------
-IRAM:0079 ; 0x8080FBAD mail [UNUSED]
+IRAM:0079 ; 0x8080FBAD mail (if command does not jump to receive command)
 IRAM:0079                 SI             ToCPUMailHi, 0xFBAD
 IRAM:007B                 SI             ToCPUMailLo, 0x8080
 IRAM:007D                 HALT
 IRAM:007E ; ---------------------------------------------------------------------------
 IRAM:007E
-IRAM:007E bad_mail:                               ; CODE XREF: main_entry+5C↑j
+IRAM:007E bad_mail:
 IRAM:007E                                         ; main_entry+60↑j
 IRAM:007E                 SI             ToCPUMailHi, 0xBAAD
 IRAM:0080                 SRS            ToCPUMailLo, $AC0.M

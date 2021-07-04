@@ -1,7 +1,7 @@
 ; =============== S U B R O U T I N E =======================================
 IRAM:0248
 IRAM:0248
-IRAM:0248 command_3:                              ; CODE XREF: command_3+1B9↓j
+IRAM:0248 command_3:
 IRAM:0248                                         ; command_3+1C9↓j
 IRAM:0248                                         ; DATA XREF: ...
 IRAM:0248                 SET16
@@ -19,7 +19,7 @@ IRAM:0250                 SR             cmd3_loop_counter, $AC0.M
 IRAM:0252                 CLR            $ACC1
 IRAM:0253 ; load loop length from buffer_ba2
 IRAM:0253
-IRAM:0253 cmd3_loop_5_start:                      ; CODE XREF: command_3+109↓j
+IRAM:0253 cmd3_loop_5_start:
 IRAM:0253                 CLR'L          $ACC0 : $AX0.H, @$AR0
 IRAM:0254                 LRI            $AC1.M, 0xB80
 IRAM:0256                 BLOOP          $AX0.H, loc_25B
@@ -29,7 +29,7 @@ IRAM:0259                 ADD'L          $ACC0, $ACC1 : $AX1.L, @$AR1
 IRAM:025A                 MRR            $AR2, $AC0.M
 IRAM:025B ; *dest = *(buffer_3c0++)
 IRAM:025B
-IRAM:025B loc_25B:                                ; CODE XREF: command_3+E↑j
+IRAM:025B loc_25B:
 IRAM:025B                 SRR            @$AR2, $AX1.L
 IRAM:025C ; BLOOP END
 IRAM:025C
@@ -46,7 +46,7 @@ IRAM:0265                 JMP            cmd3_struct_flag_0
 IRAM:0267 ; ---------------------------------------------------------------------------
 IRAM:0267 if [b87] == 1
 IRAM:0267
-IRAM:0267 cmd3_struct_flag_1:                     ; CODE XREF: command_3+1B↑j
+IRAM:0267 cmd3_struct_flag_1:
 IRAM:0267                 LR             $AC0.M, cmd2_DMEM_E42
 IRAM:0269 ; load pointer setup by command 2
 IRAM:0269 ; load value from E15 (from struct, setup by command 2)
@@ -226,11 +226,11 @@ IRAM:0303                 DECM           $AC0.M
 IRAM:0304                 JMP            loc_309
 IRAM:0306 ; ---------------------------------------------------------------------------
 IRAM:0306
-IRAM:0306 loc_306:                                ; CODE XREF: command_3+B9↑j
+IRAM:0306 loc_306:
 IRAM:0306                 JZ             loc_309
 IRAM:0308                 INCM           $AC0.M
 IRAM:0309
-IRAM:0309 loc_309:                                ; CODE XREF: command_3+BC↑j
+IRAM:0309 loc_309:
 IRAM:0309                                         ; command_3:loc_306↑j
 IRAM:0309                 SR             loc_B9E : $AC0.M,
 IRAM:030B ; [e40] = [e43] + 0xe0 + [b9e]  // the incr/decr [b9e]
@@ -252,11 +252,11 @@ IRAM:031A                 DECM           $AC0.M
 IRAM:031B                 JMP            loc_320
 IRAM:031D ; ---------------------------------------------------------------------------
 IRAM:031D
-IRAM:031D loc_31D:                                ; CODE XREF: command_3+D0↑j
+IRAM:031D loc_31D:
 IRAM:031D                 JZ             loc_320
 IRAM:031F                 INCM           $AC0.M
 IRAM:0320
-IRAM:0320 loc_320:                                ; CODE XREF: command_3+D3↑j
+IRAM:0320 loc_320:
 IRAM:0320                                         ; command_3:loc_31D↑j
 IRAM:0320                 SR             loc_B9F : $AC0.M,
 IRAM:0322 ; [e41] = [e43] + 0xe0 + [b9f]
@@ -267,7 +267,7 @@ IRAM:0326                 SR             cmd2_DMEM_E41_end, $AC0.M
 IRAM:0328                 JMP            cmd3_struct_flag_0
 IRAM:032A ; ---------------------------------------------------------------------------
 IRAM:032A
-IRAM:032A cmd3_struct_data_0:                     ; CODE XREF: command_3+AC↑j
+IRAM:032A cmd3_struct_data_0:
 IRAM:032A                 LR             $AC0.M, cmd2_DMEM_E42
 IRAM:032C ; [e40] = [e41] = [e43] = [e42]
 IRAM:032C                 SR             cmd2_DMEM_E40_start, $AC0.M
@@ -275,7 +275,7 @@ IRAM:032E                 SR             cmd2_DMEM_E41_end, $AC0.M
 IRAM:0330                 SR             cmd2_DMEM_E43, $AC0.M
 IRAM:0332 if [b87] != 1
 IRAM:0332
-IRAM:0332 cmd3_struct_flag_0:                     ; CODE XREF: command_3+1D↑j
+IRAM:0332 cmd3_struct_flag_0:
 IRAM:0332                                         ; command_3+E0↑j
 IRAM:0332                 CLR            $ACC0
 IRAM:0333 ; reset state
@@ -345,7 +345,7 @@ IRAM:0366                 SI             DMALength, 0x40
 IRAM:0368                 CALL           wait_for_dma_finish_0
 IRAM:036A ; same sort of setup as in command 2
 IRAM:036A
-IRAM:036A cmd3_b9b_zero:                          ; CODE XREF: command_3+110↑j
+IRAM:036A cmd3_b9b_zero:
 IRAM:036A                 CLR            $ACC0
 IRAM:036B                 CLR            $ACC1
 IRAM:036C                 LR             $AC0.M, loc_B82
@@ -366,7 +366,7 @@ IRAM:0382                 LR             $AR0, cmd3_temp_command_stream
 IRAM:0384                 JMP            receive_command
 IRAM:0386 ; ---------------------------------------------------------------------------
 IRAM:0386
-IRAM:0386 loc_386:                                ; CODE XREF: command_3+138↑j
+IRAM:0386 loc_386:
 IRAM:0386                 SRS            DMAMMADDRH, $AC0.M
 IRAM:0387                 SRS            DMAMMADDRL, $AC0.L
 IRAM:0388                 SI             DMADSPADDR, 0xB80
@@ -447,7 +447,7 @@ IRAM:03FF                 LR             $AR0, cmd3_temp_command_stream
 IRAM:0401                 JMP            command_3
 IRAM:0403 ; ---------------------------------------------------------------------------
 IRAM:0403
-IRAM:0403 loc_403:                                ; CODE XREF: command_3+192↑j
+IRAM:0403 loc_403:
 IRAM:0403                 LRI            $AC1.M, 0xCE0
 IRAM:0405                 SR             cmd2_DMEM_E42, $AC1.M
 IRAM:0407                 SR             cmd2_DMEM_E40_start, $AC1.M

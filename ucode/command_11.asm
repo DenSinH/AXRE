@@ -1,4 +1,4 @@
-IRAM:0175 command_11:                             ; DATA XREF: IRAM:command_jump_table↓o
+IRAM:0175 command_11:
 IRAM:0175                 CLR            $ACC0
 IRAM:0176                 CLR'L          $ACC1 : $AC0.M, @$AR0
 IRAM:0177                 SET16'L        $AC0.L : @$AR0
@@ -24,7 +24,7 @@ IRAM:0187                 LRI            $AR2, 0x140
 IRAM:0189                 LRI            $AR3, 0xE44
 IRAM:018B                 LRIS           $AX0.H, 0
 IRAM:018C
-IRAM:018C ; cmd11_wait_for_dma_finish:              ; CODE XREF: command_11+1A↓j
+IRAM:018C ; cmd11_wait_for_dma_finish:
 IRAM:018C                 LRS            $AC1.M, DMAControl
 IRAM:018D                 ANDF           $AC1.M, 4
 IRAM:018F                 JLNZ           cmd11_wait_for_dma_finish
@@ -51,7 +51,7 @@ IRAM:01A3                 NEG'S          $ACC0 : @$AR2, $AC0.L
 IRAM:01A4 ; *dest0++ = -ac0.ml
 IRAM:01A4                 SRRI           @$AR1, $AC0.M
 IRAM:01A5
-IRAM:01A5 loc_1A5:                                ; CODE XREF: command_11+27↑j
+IRAM:01A5 loc_1A5:
 IRAM:01A5                 SRRI           @$AR1, $AC0.L
 IRAM:01A6 ; BLOOP END
 IRAM:01A6

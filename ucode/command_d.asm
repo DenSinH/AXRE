@@ -1,4 +1,4 @@
-IRAM:01A9 command_d:                              ; DATA XREF: IRAM:command_jump_table↓o
+IRAM:01A9 command_d:
 IRAM:01A9                 SET16'L        $AC0.M : @$AR0
 IRAM:01AA ; load main memory address and length from command stream
 IRAM:01AA                 CLR'L          $ACC1 : $AC0.L, @$AR0

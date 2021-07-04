@@ -6,7 +6,7 @@ The start of the UCode looks like this:
 
 \inputminted[fontsize=\small]{asm}{../ucode/main_loop.asm}
 
-The \mintinline{asm}{command_jump_table} is a table with commands \hex{0} through \hex{11}, though the bounds check also allows for a command \hex{12} to exist. 
+The \mintinline{asm}{command_jump_table} is a table with commands \hex{0} through \hex{11}, though the bounds check also allows for a command \hex{12} to exist. There are pointers to what appear to be functions past command \hex{11}, but these do not return in the way the other commands do (\mintinline{asm}{JMP receive_command}), and would cause the DSP to send \hex{8080FBAD} in the mail and halt.
 
 Pseudocode for this part could be 
 
@@ -16,11 +16,7 @@ Pseudocode for this part could be
 The commands all return with a \mintinline{asm}{JMP receive_command}, save for command \hex{f}, which does some sort of reset.
 
 \subsection{Command \hex{0}}
-The assembly looks like 
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_0.asm}
-
-The point of this is to fill 3 regions of memory with either 0's, or incrementing values. Which of the 2 depends on the values from a \hex{40} byte stream DMAd from main memory. 
+The assembly is at \Cref{asm:cmd_0}. The point of this is to fill 3 regions of memory with either 0's, or incrementing values. Which of the 2 depends on the values from a \hex{40} byte stream DMAd from main memory. 
 
 Note that we are reading a \mintinline{c}{base} and an \mintinline{c}{incr} 9 times from the stream, which would amount to 9 * \hex{6} = \hex{36} bytes, so the DMA transfers 4 bytes too many.
 
@@ -31,10 +27,7 @@ Pseudocode for this could be
 \inputminted{cpp}{../ucode/command_0.c}
 
 \subsection{Command \hex{1}}
-Transforms the buffers setup by command \hex{0} with data gotten from main memory. The assembly is 
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_1.asm}
-
+Transforms the buffers setup by command \hex{0} with data gotten from main memory. Assembly is at \Cref{asm:cmd_1}.
 Pseudocode for this could be 
 
 \inputminted{cpp}{../ucode/command_1.c}
@@ -42,70 +35,46 @@ Pseudocode for this could be
 \subsection{Command \hex{2}}
 This DMAs a struct of settings from main memory to \hex{0b80}. It stores pointers to buffer sections to \hex{0e08}. It also DMAs data to the intermediate section at \hex{03c0}. 
 
-Depending on the data in the DMAd struct, it either sets some pointers to \hex{0ce0} (end of command stream?), or it overwrites the command stream with new data and sets the pointers to addresses relative to \hex{0cc0} (command stream start).
-
-Assembly for this is
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_2.asm}
+Depending on the data in the DMAd struct, it either sets some pointers to \hex{0ce0} (end of command stream?), or it overwrites the command stream with new data and sets the pointers to addresses relative to \hex{0cc0} (command stream start). Assembly is at \Cref{asm:cmd_2}.
 
 And pseudocode could be
 
 \inputminted{cpp}{../ucode/command_2.c}
 
 \subsection{Command \hex{3}}
-This command uses the struct transferred by command 2 to transfer and transform other data. The code is quite complex, but here is the assembly
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_3.asm}
-
+This command uses the struct transferred by command \hex{2} to transfer and transform other data. The code is quite complex, but here is the assembly Assembly is at \Cref{asm:cmd_3}.
 And pseudocode could be
 
 \inputminted{cpp}{../ucode/command_3.c}
 
 \subsection{Command \hex{4}, \hex{5} and \hex{9}}
-These commands are all very similar. Command \hex{9} only calls \mintinline{c}{sub_484} with a pointer to the buffer at \hex{7c0}, while \hex{4} and \hex{5} DMA the buffers at \hex{400} and \hex{7c0} respectively, before also calling \mintinline{c}{sub_484} with their respective buffers as arguments. Since they are so similar, I will only put the assembly for command \hex{4} here.
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_4.asm}
+These commands are all very similar. Command \hex{9} only calls \mintinline{c}{sub_484} with a pointer to the buffer at \hex{7c0}, while \hex{4} and \hex{5} DMA the buffers at \hex{400} and \hex{7c0} respectively, before also calling \mintinline{c}{sub_484} with their respective buffers as arguments. Since they are so similar, I will only put the assembly for command \hex{4} in this document. Assembly is at \Cref{asm:cmd_459}.
 
 And the pseudocode for \hex{4} and \hex{5} is the same, except \hex{5} uses \hex{7c0} instead of \hex{400}:
 
 \inputminted{c}{../ucode/command_459.c}
 
-This function \mintinline{c}{sub_484} DMAs a new buffer from main memory to the buffer passed as argument, and adds it to the current buffer at \hex{0}.
+This function \mintinline{c}{sub_484} DMAs a new buffer from main memory to the buffer passed as argument, and adds it to the current buffer at \hex{0}. Assembly is at \Cref{asm:cmd_459}.
 
-The assembly for this function is
-
-\inputminted[fontsize=\small]{asm}{../ucode/mix_buffers.asm}
-
-And pseudocode is
+Pseudocode is
 
 \inputminted{c}{../ucode/mix_buffers.c}
 
 \subsection{Command \hex{6}}
-Command 6 simply transfers the buffer at \hex{0} back to main memory. The assembly is 
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_6.asm}
-
-And pseudocode is
+Command 6 simply transfers the buffer at \hex{0} back to main memory. Assembly is at \Cref{asm:cmd_6}.
+Pseudocode is
 
 \inputminted{c}{../ucode/command_6.c}
 
 \subsection{Command \hex{7}}
-clears out \hex{140} word section at \hex{0000}, DMAs \hex{140} words of data from main memory to \hex{e44} and copies it over to \hex{0140} and \hex{280}, completely filling the buffer at \hex{0000}. 
-
-Assembly for this command is
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_7.asm}
+clears out \hex{140} word section at \hex{0000}, DMAs \hex{140} words of data from main memory to \hex{e44} and copies it over to \hex{0140} and \hex{280}, completely filling the buffer at \hex{0000}. Assembly is at \Cref{asm:cmd_7}.
 
 Pseudocode is
 
 \inputminted{c}{../ucode/command_7.c}
 
 \subsection{Command \hex{8}}
-This command is very confusing, since there is either a bug in the UCode or in dolphin and the doc by Duddie. The command saves a main memory address in \texttt{AX1}, then later uses \texttt{LD} extended opcodes to load values into \texttt{AX1} from the COEF region in memory for some calculation. At the end, it should restore the main memory address, and DMA data to main memory. If dolphin and the doc by Duddie are correct though, this DMA will happen to a pretty random address. I assume there is an error in the way that they describe that the \texttt{LD} etended opcode should happen.
-
-The assembly for this command is 
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_8.asm}
+This command is very confusing, since there is either a bug in the UCode or in dolphin and the doc by Duddie. The command saves a main memory address in \texttt{AX1}, then later uses \texttt{LD} extended opcodes to load values into \texttt{AX1} from the COEF region in memory for some calculation. At the end, it should restore the main memory address, and DMA data to main memory. If dolphin and the doc by Duddie are correct though, this DMA will happen to a pretty random address. I assume there is an error in the way that they describe that the \texttt{LD} etended opcode should happen. Assembly is at \Cref{asm:cmd_8}.
 
 Pseudocode is
 
@@ -113,34 +82,46 @@ Pseudocode is
 
 \subsection{Command \hex{a} - \hex{c}}
 These commands immediately return on call.
-\subsection{Command \hex{d}}
-This command loads a new command stream to DMEM and resets the \mintinline{c}{command_stream} pointer. 
 
-\inputminted[fontsize=\small]{asm}{../ucode/command_d.asm}
+\subsection{Command \hex{d}}
+This command loads a new command stream to DMEM and resets the \mintinline{c}{command_stream} pointer. Assembly is at \Cref{asm:cmd_d}.
 
 Pseudocode for this could be 
 
 \inputminted{c}{../ucode/command_d.c}
 
 \subsection{Command \hex{e}}
-This command DMAs the buffer section at \hex{280} to main mem, and then procedurally combines the data from the buffer section at \hex{0} and \hex{140} and sends that to another main memory address.
-
-Assembly is 
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_e.asm}
+This command DMAs the buffer section at \hex{280} to main mem, and then procedurally combines the data from the buffer section at \hex{0} and \hex{140} and sends that to another main memory address. Assembly is at \Cref{asm:cmd_e}.
 
 Pseudocode for this could be 
 
 \inputminted{c}{../ucode/command_e.c}
 
-
 \subsection{Command \hex{f}}
+Resets the DSP. Can be done in different ways, selected by mail that is expected. These ways are:
+
+\begin{itemize}
+    \item Sending \hex{dcd10001} and an IRQ to the CPU and going back into the main loop (waiting for \hex{babe} mail...). This is a soft reset.
+    \item Some sort of debug reset that allows the CPU to send data back into main memory (potentially to view what went wrong). Then a similar setup is ran as in the ROM. This is a hard reset.
+    \item Jumping to the ROM start. This is a hard reset.
+    \item Jumping to the \hex{babe} mail wait loop in the RAM setup. This is a soft reset.
+\end{itemize}
+
+The assembly for this command is in \Cref{asm:cmd_f}. Pseudocode for this command is 
+
+\inputminted{c}{../ucode/command_f.c}
+
 \subsection{Command \hex{10}}
+
+DMAs the buffer at \hex{07c0} to main memory, loads new data into \hex{07c0} and mixes it into \hex{0000}. Assembly is at \Cref{asm:cmd_10}.
+
+Pseudocode for this could be 
+
+\inputminted{c}{../ucode/command_10.c}
+
 \subsection{Command \hex{11}}
 
-The same as command \hex{7}, except now \hex{0} receives the negative 32-bit values from the buffer that is transferred, whereas \hex{140} still gets the positive values.
-
-\inputminted[fontsize=\small]{asm}{../ucode/command_11.asm}
+The same as command \hex{7}, except now \hex{0} receives the negative 32-bit values from the buffer that is transferred, whereas \hex{140} still gets the positive values. Assembly is at \Cref{asm:cmd_11}.
 
 Pseudocode for this could be 
 
