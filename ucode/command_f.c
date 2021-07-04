@@ -14,7 +14,7 @@ void command_f(u16* &command_stream) {
 
 void j_send_dcd10001_irq() {
     // in main_entry (soft reset)
-    goto send_dcd10001_mail;
+    goto send_dcd10001_irq;
 }
 
 // used in ROM setup (calling transfer_ucode)

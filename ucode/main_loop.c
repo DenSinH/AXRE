@@ -14,9 +14,10 @@ void main_entry() {
     wait_for_mail_sent();
     goto wait_for_babe;
 
-send_dcd10001_mail:
+send_dcd10001_irq:
     // this part is only used in command f
     send_mail(0xdcd1, 0x0001);
+    send_irq();
     wait_for_mail_sent();
 wait_for_babe:
 
