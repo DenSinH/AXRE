@@ -17,13 +17,14 @@ void command_0(u16* &command_stream) {
             if (base) {
                 int j = 0;
                 do {
-                    *buffer = *base;
+                    *buffer++ = *base;
                     base += incr;
                     j++;
                 } while (j < 0x140);
             }
             else {
                 memset(buffer, 0, 0x140);  // in words, not bytes
+                buffer += 0x140;
             }
         }
     }
