@@ -15,7 +15,7 @@ void main_loop() {
         u32 mail = wait_for_mail_recv();
         cmd_info_lo = (u16)mail;
         cmd_info_hi = (mail >> 16) & 0xff;
-        u16 index = (mail >> 7) & 0x7e;
+        u16 index = (mail >> (16 + 7)) & 0x7e;
 
         // in the assembly this is just a switch case
         // the offset is in 2 words, this shift does not happen

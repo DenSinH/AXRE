@@ -41,7 +41,7 @@ RAM:0039                 SR             cmd_info_lo, $AC1.M ; cmd_info_lo = mail
 RAM:003B                 MRR            $AC1.M, $AC0.M
 RAM:003C                 ANDI           $AC1.M, 0xFF
 RAM:003E                 SR             cmd_info_hi, $AC1.M ; cmd_info_hi = mail.hi & 0xff
-RAM:0040 ; callback = ((mail.hi >> 8) & 0x7e) + 0x62
+RAM:0040 ; callback = ((mail.hi >> 7) & 0x7e) + 0x62
 RAM:0040                 LSR            $ACC0, 0x39 ; -EXTS6(0x39) = 7
 RAM:0041                 ANDI           $AC0.M, 0x7E
 RAM:0043                 ADDI           $AC0.M, 0x62
