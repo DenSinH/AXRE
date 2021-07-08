@@ -8,6 +8,9 @@ struct setup_data {
 
 void rom_start() {
     // setup config and status reg
+    send_mail(0x8071, 0xfeed);
+    wait_for_mail_sent();
+
     while (true) {
         u16 mail_lo = wait_for_mail_recv();
         if (mail_lo == 0xa001) {
