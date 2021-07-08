@@ -1,5 +1,11 @@
 \chapter{UCode}
 
+Before the UCode is loaded, there is a small stub of code in IRAM. For Mortal Kombat 5, this code looks like 
+
+\inputminted[fontsize=\small]{asm}{../ucode/mk_iram_stub.asm}
+
+The code doesn't do much other than read data and send the CPU mail. The stub looks the same in animal crossing (Zelda UCode) and in Tetris Worlds. Seemingly, the DSP ROM would DMA to DMEM with the settings it sends for some games, but this would not copy it over. 
+
 The main interesting part of the DSP's workings is the actual UCode itself. The main entrypoint (for Mortal Kombat 5 at least), is at \hex{10}. The main thing it does is waiting for mail, and then processing a stream of commands (at \hexc00} in DMEM).
 
 The start of the UCode looks like this:
