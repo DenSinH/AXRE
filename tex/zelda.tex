@@ -1,0 +1,19 @@
+\chapter{Zelda}
+
+The Zelda UCode is another popular UCode. The main entry for this ucode has the following assembly:
+
+\inputminted[fontsize=\small]{asm}{../zelda/main_loop.asm}
+
+The entry point for this ucode is either \hex{0} or \hex{10}. Because of the way the switch case looks, it is hard to specifically say how many commands there really are. The main loop pseudocode looks like 
+
+\inputminted[]{c}{../zelda/main_loop.c}
+
+Every command seems to end by jumping to the implementation of command \hex{0}, which sends the CPU mail. The assembly for this looks like 
+
+\inputminted[fontsize=\small]{asm}{../zelda/command_0.asm}
+
+And pseudocode looks like
+
+\inputminted[]{c}{../zelda/command_0.c}
+
+From now, I will just disassemble and implement the commands as I come across them, simply because of the strange structure of them.
